@@ -1,7 +1,8 @@
 package cn.xpbootcamp.refactor;
 
-public class Rental {
+import java.math.BigDecimal;
 
+public class Rental {
     private Movie movie;
     private int daysRented;
 
@@ -14,8 +15,15 @@ public class Rental {
         return movie;
     }
 
-    int getDaysRented() {
-        return daysRented;
+    BigDecimal getAmountFor() {
+        return movie.getAmountFor(daysRented);
     }
 
+    int getFrequentRenterPoints() {
+        return movie.getRenterPoints(daysRented);
+    }
+
+    public String getStatementItem() {
+        return String.format("\t%s\t%s\n", this.movie.getTitle(), this.movie.getAmountFor(daysRented));
+    }
 }

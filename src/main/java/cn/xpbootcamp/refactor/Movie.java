@@ -1,24 +1,32 @@
 package cn.xpbootcamp.refactor;
 
+import cn.xpbootcamp.refactor.price.RentalPrice;
+import lombok.Getter;
+import lombok.SneakyThrows;
+
+import java.math.BigDecimal;
+
 public class Movie {
+    @Getter
+    private final String title;
 
-    static final int CAMPUS = 2;
-    static final int HISTORY = 0;
-    static final int NEW_RELEASE = 1;
+    @Getter
+    private final MovieType movieType;
 
-    private String title;
-    private int priceCode;
+    private RentalPrice rentalPrice;
 
-    Movie(String title, int priceCode) {
+    @SneakyThrows
+    Movie(String title, MovieType movieType) {
         this.title = title;
-        this.priceCode = priceCode;
+        this.movieType = movieType;
+        this.rentalPrice = (RentalPrice) this.movieType.clazz.newInstance();
     }
 
-    int getPriceCode() {
-        return priceCode;
+    public int getRenterPoints(final int daysRented) {
+        return this.movieType.getRenterPoints(daysRented);
     }
 
-    String getTitle() {
-        return title;
+    public BigDecimal getAmountFor(final int daysRented) {
+        return this.rentalPrice.getCharge(daysRented);
     }
 }
