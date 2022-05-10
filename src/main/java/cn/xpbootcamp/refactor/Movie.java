@@ -1,6 +1,5 @@
 package cn.xpbootcamp.refactor;
 
-import cn.xpbootcamp.refactor.price.RentalPrice;
 import lombok.Getter;
 import lombok.SneakyThrows;
 
@@ -13,13 +12,10 @@ public class Movie {
     @Getter
     private final MovieType movieType;
 
-    private RentalPrice rentalPrice;
-
     @SneakyThrows
     Movie(String title, MovieType movieType) {
         this.title = title;
         this.movieType = movieType;
-        this.rentalPrice = (RentalPrice) this.movieType.clazz.newInstance();
     }
 
     public int getRenterPoints(final int daysRented) {
@@ -27,6 +23,6 @@ public class Movie {
     }
 
     public BigDecimal getAmountFor(final int daysRented) {
-        return this.rentalPrice.getCharge(daysRented);
+        return this.movieType.getRentalPrice().getCharge(daysRented);
     }
 }
