@@ -23,6 +23,6 @@ public class Movie {
     }
 
     public BigDecimal getAmountFor(final int daysRented) {
-        return this.movieType.getRentalPrice().getCharge(daysRented);
+        return this.movieType.getCharge(daysRented);
     }
 }
